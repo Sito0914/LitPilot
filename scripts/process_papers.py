@@ -106,8 +106,15 @@ def estimate_cost(input_tokens: int, output_tokens: int = ANALYSIS_MAX_TOKENS) -
 # TEXT EXTRACTION
 # ══════════════════════════════════════════════
 
+def _tesseract_available() -> bool:
+    """Check whether Tesseract OCR is installed on the system."""
+    import shutil
+    return shutil.which("tesseract") is not None
+
+
 def extract_text_from_pdf(pdf_path: Path) -> str:
-    """Extract text from a PDF using PyMuPDF (fitz) for better quality."""
+    """Extract text from a PDF using PyMuPDF (fitz) for better quality.
+    Falls back to per-page OCR (via Tesseract) for scanned pages."""
     try:
         doc = fitz.open(str(pdf_path))
         total_pages = len(doc)
@@ -118,19 +125,55 @@ def extract_text_from_pdf(pdf_path: Path) -> str:
 
         pages_to_process = min(total_pages, MAX_PDF_PAGES)
         text_parts = []
+        text_page_count = 0
+        ocr_page_count = 0
+        has_tesseract = _tesseract_available()
 
         for i in range(pages_to_process):
             page = doc[i]
             page_text = page.get_text("text")
-            if page_text.strip():
+
+            if len(page_text.strip()) > 200:
+                # Enough text for a real page (not just headers/footers/captions)
                 text_parts.append(f"--- Page {i+1} ---\n{page_text}")
+                text_page_count += 1
+            else:
+                # Page has little or no text — attempt OCR
+                if not has_tesseract:
+                    continue
+                try:
+                    tp = page.get_textpage_ocr(flags=0, language="eng", dpi=300)
+                    ocr_text = page.get_text("text", textpage=tp)
+                    if ocr_text.strip():
+                        text_parts.append(f"--- Page {i+1} (OCR) ---\n{ocr_text}")
+                        ocr_page_count += 1
+                except Exception:
+                    pass
 
         doc.close()
         full_text = "\n\n".join(text_parts)
 
-        if len(full_text.strip()) < 100:
-            print(f"  WARNING: Very little text extracted from {pdf_path.name}. "
-                  f"It may be a scanned PDF. Consider OCR.")
+        # Print status based on the four cases
+        if ocr_page_count == 0 and text_page_count > 0:
+            # Case 1: Normal PDF
+            pass
+        elif text_page_count > 0 and ocr_page_count > 0:
+            # Case 2: Mixed
+            print(f"  Mixed PDF: {text_page_count} text pages, "
+                  f"{ocr_page_count} OCR pages")
+        elif ocr_page_count > 0 and text_page_count == 0:
+            # Case 3: All OCR
+            print(f"  Scanned PDF: all {ocr_page_count} pages processed via OCR")
+        elif text_page_count == 0 and ocr_page_count == 0:
+            # Case 4: No text and no OCR
+            if not has_tesseract:
+                print(f"  WARNING: No text extracted from {pdf_path.name}. "
+                      f"This appears to be a scanned PDF but Tesseract is not installed.")
+                print(f"  Install it with: brew install tesseract (macOS) "
+                      f"or apt install tesseract-ocr (Linux)")
+            else:
+                print(f"  WARNING: Very little text extracted from {pdf_path.name}, "
+                      f"even with OCR.")
 
         return full_text
 

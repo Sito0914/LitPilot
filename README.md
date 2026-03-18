@@ -4,7 +4,7 @@ Automate your PhD literature review using structured LLM agent prompts. Drop PDF
 
 ## What This Does
 
-1. **Extracts text** from PDF and Word documents automatically
+1. **Extracts text** from PDF and Word documents automatically (with OCR fallback for scanned PDFs)
 2. **Analyses each paper** using a customisable LLM agent prompt that maps findings to your specific literature review structure
 3. **Tracks everything** in an Excel spreadsheet with methodology, relevance ratings, section mappings, and theoretical frameworks
 4. **Synthesises across papers** to identify coverage gaps, thematic clusters, contradictions, and recommended actions
@@ -178,6 +178,38 @@ python3 scripts/synthesise_batch.py
 # Or force a full re-synthesis:
 python3 scripts/synthesise_batch.py --full
 ```
+
+## OCR Support for Scanned PDFs
+
+The pipeline automatically detects scanned pages and attempts OCR using [Tesseract](https://github.com/tesseract-ocr/tesseract). This is **optional** — the pipeline works without it, but scanned PDFs will produce empty or incomplete notes.
+
+### Install Tesseract
+
+```bash
+# macOS
+brew install tesseract
+
+# Ubuntu/Debian
+sudo apt install tesseract-ocr
+
+# Windows — download installer from:
+# https://github.com/UB-Mannheim/tesseract/wiki
+```
+
+No additional Python packages are needed — PyMuPDF (already included) handles the OCR integration.
+
+### How it works
+
+The pipeline processes each page individually:
+
+| Scenario | What happens | Console output |
+|----------|-------------|----------------|
+| **Normal PDF** | Text extracted directly | (no extra output) |
+| **Mixed PDF** (some pages scanned) | Text pages extracted normally, scanned pages OCR'd | `Mixed PDF: 8 text pages, 2 OCR pages` |
+| **Fully scanned PDF** | All pages processed via OCR | `Scanned PDF: all 10 pages processed via OCR` |
+| **Scanned PDF, no Tesseract** | Scanned pages skipped | `WARNING: Tesseract is not installed...` |
+
+Pages processed via OCR are marked with `(OCR)` in the extracted text (e.g., `--- Page 3 (OCR) ---`) so you can see exactly which pages were scanned.
 
 ## Customisation Guide
 
@@ -358,8 +390,9 @@ Cross-paper analysis including:
 - Check that they have `.pdf` or `.docx` extensions
 
 **"Very little text extracted" or blank summaries**
-- The PDF is likely scanned (image-based). You need OCR first
-- Try Adobe Acrobat's "Recognize Text" or a tool like `ocrmypdf`
+- The PDF is likely scanned (image-based). The pipeline will attempt OCR automatically if Tesseract is installed
+- Install Tesseract: `brew install tesseract` (macOS) or `apt install tesseract-ocr` (Linux)
+- If Tesseract is installed and the output is still poor, the scan quality may be too low for OCR
 
 **Rate limit errors**
 - The pipeline has built-in retry with exponential backoff
