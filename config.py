@@ -80,6 +80,7 @@ TRACKER_HEADERS = [
     "Theoretical Frameworks",
     "Date Processed",
     "Source File",
+    "DOI",
 ]
 
 # ══════════════════════════════════════════════════════════════

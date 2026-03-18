@@ -411,7 +411,18 @@ def save_summary(filename: str, summary: str) -> Path:
     # Append to Excel tracker
     if csv_line:
         fields = csv_line.split("|")
-        fields.append(filename)
+        # The prompt outputs 13 fields (12 original + DOI).
+        # We insert Source File before DOI to keep tracker column order:
+        # [1-12 original fields] + [Source File] + [DOI]
+        if len(fields) >= 13:
+            doi = fields[12].strip()
+            fields = fields[:12]
+            fields.append(filename)
+            fields.append(doi)
+        else:
+            fields = fields[:12]
+            fields.append(filename)
+            fields.append("")
 
         if EXCEL_TRACKER.exists():
             wb = load_workbook(EXCEL_TRACKER)

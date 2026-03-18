@@ -49,6 +49,34 @@ The project has:
 
 <!-- Add or remove rows as needed to match your actual structure -->
 
+## Evidence Rules
+
+You MUST follow these rules throughout the entire output. They are
+non-negotiable and apply to every factual claim you make about the paper.
+
+1. **Page binding:** Every key finding, result, or empirical claim must
+   include the page number(s) where it appears in the source text
+   (e.g., `(p. 12)` or `(pp. 8-9)`). If page numbers are not discernible
+   from the extracted text, write `(page unclear)` — do NOT guess.
+
+2. **Evidence tracing:** For each key finding, provide a brief verbatim
+   quote or close paraphrase from the paper that supports it. Mark verbatim
+   quotes with quotation marks. Mark close paraphrases with `[paraphrase]`.
+
+3. **Source attribution:** Tag every claim as one of:
+   - `[PAPER STATES]` — the authors explicitly make this claim
+   - `[MODEL INFERS]` — you are drawing a connection, implication, or
+     interpretation that the authors do not explicitly state
+
+4. **Uncertainty flagging:** If a finding is ambiguous, weakly supported,
+   or you are not confident in your reading, prepend `[UNCERTAINTY]` and
+   briefly explain why (e.g., conflicting evidence, vague language,
+   incomplete reporting).
+
+If you cannot find page-level evidence for a claim, you must still make
+the claim but tag it `[MODEL INFERS]` and note that no direct textual
+support was located. Never present a model inference as a paper statement.
+
 ## Output Format
 
 You MUST output in EXACTLY the following format. The output has TWO parts
@@ -108,18 +136,31 @@ argument. Written in your own words, not copied from the paper.]
 
 ## Key Mechanisms & Findings
 
+For each finding below, you MUST follow the Evidence Rules: include page
+numbers, a verbatim quote or paraphrase, a source tag, and uncertainty
+flags where applicable.
+
 ### [Theme/Mechanism 1]
 
 - **Concept:** [Description of the mechanism]
 - **Findings:**
-  - [Key Result 1 — include magnitudes, significance levels where reported]
-  - [Key Result 2]
+  - **Finding:** [Key Result 1 — include magnitudes, significance levels where reported]
+    - **Page(s):** [e.g., p. 14 or pp. 20-21 or page unclear]
+    - **Evidence:** ["direct quote from paper" or [paraphrase] of relevant passage]
+    - **Source:** [PAPER STATES] or [MODEL INFERS]
+  - **Finding:** [Key Result 2]
+    - **Page(s):** [...]
+    - **Evidence:** [...]
+    - **Source:** [...]
 
 ### [Theme/Mechanism 2]
 
 - **Concept:** [Description]
 - **Findings:**
-  - [Key Result 1]
+  - **Finding:** [Key Result 1]
+    - **Page(s):** [...]
+    - **Evidence:** [...]
+    - **Source:** [...]
 
 ## Critical Analysis
 
@@ -178,8 +219,23 @@ and one sentence on how:
 
 ### Potential Citations
 
-[List 2-4 specific claims or findings you could cite. For each, state the
-section where it would fit using your section codes above.]
+List 2-4 specific claims or findings you could cite. For EACH citation,
+provide all four fields below:
+
+1. **Claim:** [The citable claim or finding]
+   - **Section:** [Section code where it would fit]
+   - **Page(s):** [Page number(s) in the source paper]
+   - **Evidence:** ["verbatim quote" or [paraphrase] supporting the claim]
+
+## Evidence Provenance Summary
+
+Provide a compact audit table listing every key claim made in this note.
+This allows quick verification against the source PDF.
+
+| # | Claim (short) | Page(s) | Source | Uncertainty? |
+|---|---------------|---------|--------|-------------|
+| 1 | [Brief description] | [p. X] | PAPER STATES / MODEL INFERS | Yes/No |
+| 2 | [...] | [...] | [...] | [...] |
 
 ## Action Items
 
@@ -225,3 +281,4 @@ Fields in order:
 10. Empirical chapter relevance (e.g., "Ch.A,Ch.B" or "Ch.A only" or "None")
 11. Theoretical frameworks engaged (e.g., "Framework1,Framework2" or "None")
 12. Date processed (YYYY-MM-DD)
+13. DOI (e.g., "10.1016/j.jdeveco.2023.103081" — extract from paper if present, otherwise "N/A")

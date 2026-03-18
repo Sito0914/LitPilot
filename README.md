@@ -6,8 +6,9 @@ Automate your PhD literature review using structured LLM agent prompts. Drop PDF
 
 1. **Extracts text** from PDF and Word documents automatically (with OCR fallback for scanned PDFs)
 2. **Analyses each paper** using a customisable LLM agent prompt that maps findings to your specific literature review structure
-3. **Tracks everything** in an Excel spreadsheet with methodology, relevance ratings, section mappings, and theoretical frameworks
-4. **Synthesises across papers** to identify coverage gaps, thematic clusters, contradictions, and recommended actions
+3. **Enforces evidence provenance** — every key finding is bound to a page number, backed by a verbatim quote or paraphrase, and tagged as author-stated or model-inferred, with explicit uncertainty flags
+4. **Tracks everything** in an Excel spreadsheet with methodology, relevance ratings, section mappings, theoretical frameworks, and DOI
+5. **Synthesises across papers** to identify coverage gaps, thematic clusters, contradictions, and recommended actions
 
 ## What This Does NOT Do
 
@@ -85,6 +86,21 @@ This pipeline keeps you in control. The AI does the repetitive work — pulling 
 **Use the notes when you write.** The markdown files are not just summaries to glance at and forget — they are structured notes you can come back to when writing your literature review. The section codes, citation suggestions, and framework tags all map to your review structure, so when you sit down to write, you already have an organised set of notes to work from.
 
 The AI improves your efficiency. It does not replace your judgement — checking and correcting its output is your responsibility.
+
+## Evidence Provenance
+
+LLMs can confidently blend what a paper actually says with their own inferences. In academic work, this is dangerous — you need to know whether a claim came from the authors or from the model. This pipeline enforces four evidence rules on every analysis:
+
+| Rule | What it does | Example |
+|------|-------------|---------|
+| **Page binding** | Every finding includes the page number where it appears | `(p. 14)` or `(pp. 8-9)` or `(page unclear)` |
+| **Evidence tracing** | Each finding includes a verbatim quote or close paraphrase | `"inequality decreased by 12%"` or `[paraphrase] regional gaps narrowed` |
+| **Source attribution** | Every claim is tagged as author-stated or model-inferred | `[PAPER STATES]` or `[MODEL INFERS]` |
+| **Uncertainty flagging** | Ambiguous or weakly supported claims are flagged | `[UNCERTAINTY] — conflicting results in Tables 3 and 5` |
+
+Each note also ends with an **Evidence Provenance Summary** — a compact table listing every key claim with its page reference, source type, and uncertainty status. This lets you quickly spot-check any note against the source PDF without re-reading the entire analysis.
+
+These rules mean the pipeline produces **verifiable research notes**, not just well-structured summaries.
 
 ## Why This Approach Works
 
@@ -338,11 +354,12 @@ To use Sonnet for synthesis (cheaper but less nuanced), change `SYNTHESIS_MODEL`
 Each paper produces a structured markdown note with:
 - Abstract summary, research gap, hypothesis
 - Methodology and key techniques
-- Key mechanisms and findings with magnitudes
+- Key mechanisms and findings — each with page number, evidence quote, and `[PAPER STATES]` / `[MODEL INFERS]` source tag
 - Critical analysis (strengths, limitations, open questions)
 - Section-by-section relevance mapping
 - Theoretical framework engagement
-- Potential citations with section codes
+- Potential citations with section codes, page numbers, and evidence quotes
+- Evidence Provenance Summary — a compact audit table for quick verification against the source PDF
 - Action items
 - Final assessment (innovation, evidence quality, relevance)
 
@@ -355,6 +372,7 @@ One row per paper with columns for filtering:
 - Primary and all relevant sections
 - Empirical chapter relevance
 - Theoretical frameworks engaged
+- DOI (automatically extracted from each paper when available)
 
 ### Synthesis report (summaries/synthesis/)
 
